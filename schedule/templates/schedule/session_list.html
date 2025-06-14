@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>📅 Study Sessions for "{{ group.name }}"</h2>
+
+    {% if sessions %}
+        <ul class="list-group mt-3">
+            {% for session in sessions %}
+                <li class="list-group-item">
+                    <strong>{{ session.title }}</strong><br>
+                    🗓️ {{ session.scheduled_time|date:"F j, Y" }} at 🕒 {{ session.scheduled_time|time:"H:i" }}<br>
+                    📝 {{ session.description }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-muted mt-3">No sessions scheduled yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

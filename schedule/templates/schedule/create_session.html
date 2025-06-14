@@ -2,11 +2,12 @@
 
 {% block content %}
 <div class="container mt-4">
-    <h2>📅 Schedule a Study Session - {{ group.name }}</h2>
-    <form method="post">
+    <h2>🗓️ Create Study Session for "{{ group.name }}"</h2>
+    <form method="POST">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-success">Create Session</button>
+        <a href="{% url 'group_chat' group.id %}" class="btn btn-secondary">Back to Chat</a>
     </form>
 </div>
 {% endblock %}

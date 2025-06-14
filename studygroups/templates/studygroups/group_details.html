@@ -10,8 +10,13 @@
     {% if user in group.members.all %}
         <p class="text-success">You are already a member of this group.</p>
         <a href="{% url 'group_chat' group.id %}" class="btn btn-info">Go to Chat</a>
+       
+        
     {% else %}
         <a href="{% url 'join_group' group.id %}" class="btn btn-success">Join Group</a>
     {% endif %}
 </div>
 {% endblock %}
+
+
+  
