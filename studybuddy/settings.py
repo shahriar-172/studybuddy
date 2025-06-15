@@ -20,7 +20,7 @@ INSTALLED_APPS = [
     'chat',
     'schedule',
     'widget_tweaks',
-    'resources',  # নতুন app resources যুক্ত করা হয়েছে
+    'resources',  
 ]
 
 MIDDLEWARE = [
@@ -52,17 +52,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'studybuddy.wsgi.application'
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'studybuddy',
-        'USER': 'wsluser',
-        'PASSWORD': '17302',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -89,11 +83,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# 🔽 Media file configuration
+
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# 🔽 Login redirect settings
+
 LOGIN_REDIRECT_URL = '/studygroups/groups/'
