@@ -18,7 +18,7 @@ def create_study_group(request):
             group = form.save(commit=False)
             group.created_by = request.user
             group.save()
-            group.members.add(request.user)  # creator auto join kore
+            group.members.add(request.user)  
             return redirect('group_list')
     else:
         form = StudyGroupForm()
@@ -54,4 +54,8 @@ def create_group(request):
             return redirect('group_list')
     return render(request, 'studygroups/create_group.html')
 
-
+@login_required
+def leave_group(request, group_id):
+    group = get_object_or_404(StudyGroup, id=group_id)
+    group.members.remove(request.user)
+    return redirect('home')

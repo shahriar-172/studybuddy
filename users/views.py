@@ -1,21 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
+from .forms import UserRegistrationForm, UserProfileForm
+from studygroups.models import StudyGroup
 
+# ✅ Welcome page before login
 def welcome_view(request):
     return render(request, 'users/welcome.html')
-    
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import UserRegistrationForm, UserProfileForm
-from django.shortcuts import render
 
-
-from django.shortcuts import render
-
+# ✅ Home/dashboard after login
+@login_required
 def home(request):
-    return render(request, 'home.html')
+    joined_groups = StudyGroup.objects.filter(members=request.user)
+    all_groups = StudyGroup.objects.all()
+    return render(request, 'users/dashboard.html', {
+        'joined_groups': joined_groups,
+        'all_groups': all_groups
+    })
 
-
-
+# ✅ Registration view
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -30,7 +33,7 @@ def register(request):
             profile.save()
 
             login(request, user)
-            return redirect('home')  
+            return redirect('home')  # ✅ Redirect to dashboard
     else:
         user_form = UserRegistrationForm()
         profile_form = UserProfileForm()
@@ -38,5 +41,4 @@ def register(request):
     return render(request, 'users/register.html', {
         'user_form': user_form,
         'profile_form': profile_form
-        
     })

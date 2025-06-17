@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="text-center mb-4">
+        <h2>👋 Welcome, {{ user.username }}</h2>
+        <p class="text-muted">Here is your dashboard</p>
+    </div>
+
+    <div class="row">
+        <!-- Joined Groups -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    📚 Groups You've Joined
+                </div>
+                <ul class="list-group list-group-flush">
+                    {% if joined_groups %}
+                        {% for group in joined_groups %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                {{ group.name }}
+                                <a href="{% url 'group_details' group.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-muted">You haven't joined any groups yet.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <!-- View All Groups -->
+        <div class="col-md-6">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-success text-white">
+                    🌐 Explore All Study Groups
+                </div>
+                <div class="card-body text-center">
+                    <p class="card-text">Join more groups to enhance your study experience!</p>
+                    <a href="{% url 'group_list' %}" class="btn btn-success">View All Groups</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
