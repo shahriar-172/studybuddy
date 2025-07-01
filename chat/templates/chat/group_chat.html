@@ -7,13 +7,8 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2>{{ group.name }} - Group Chat</h2>
         <div>
-            <!-- Upload Resource Button -->
             <a href="{% url 'upload_resource' group.id %}" class="btn btn-sm btn-warning me-2">📎 Upload Resource</a>
-
-            <!-- Create Session Button -->
             <a href="{% url 'create_session' group.id %}" class="btn btn-sm btn-success me-2">➕ Create Session</a>
-
-            <!-- View Sessions Button -->
             <a href="{% url 'session_list' group.id %}" class="btn btn-sm btn-info">📅 View Sessions</a>
         </div>
     </div>
@@ -38,10 +33,30 @@
             {% for resource in resources %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>{{ resource.file.name|slice:"10:" }}</span>
-                    <a href="{{ resource.file.url }}" class="btn btn-sm btn-outline-primary" download>Download</a>
+                    <div>
+                        <a href="{% url 'download_resource' resource.id %}" class="btn btn-sm btn-outline-primary me-2">Download</a>
+                        <span class="badge bg-secondary">{{ resource.download_count }} downloads</span>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
+    </div>
+    {% endif %}
+
+    <!-- Popular Resources -->
+    {% if popular_resources %}
+    <div class="mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">🔥 Popular in This Group</div>
+            <ul class="list-group list-group-flush">
+                {% for res in popular_resources %}
+                    <li class="list-group-item">
+                        {{ res.file.name|slice:"30:" }}<br>
+                        <small>{{ res.download_count }} downloads</small>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
     {% endif %}
 
@@ -53,5 +68,6 @@
             <button class="btn btn-primary" type="submit">Send</button>
         </div>
     </form>
+
 </div>
 {% endblock %}

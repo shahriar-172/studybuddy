@@ -4,11 +4,11 @@ from django.contrib.auth.decorators import login_required
 from .forms import UserRegistrationForm, UserProfileForm
 from studygroups.models import StudyGroup
 
-# ✅ Welcome page before login
+
 def welcome_view(request):
     return render(request, 'users/welcome.html')
 
-# ✅ Home/dashboard after login
+
 @login_required
 def home(request):
     joined_groups = StudyGroup.objects.filter(members=request.user)
@@ -18,7 +18,7 @@ def home(request):
         'all_groups': all_groups
     })
 
-# ✅ Registration view
+
 def register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
@@ -33,7 +33,7 @@ def register(request):
             profile.save()
 
             login(request, user)
-            return redirect('home')  # ✅ Redirect to dashboard
+            return redirect('home')  
     else:
         user_form = UserRegistrationForm()
         profile_form = UserProfileForm()

@@ -3,20 +3,24 @@
 {% block content %}
 <div class="container mt-4">
     <h2>{{ group.name }}</h2>
-    <p><strong>Institution:</strong> {{ group.institution }}</p>
-    <p><strong>Class:</strong> {{ group.class_level }}</p>
+    <p><strong>Institution:</strong> {{ creator_profile.institution }}</p>
+    <p><strong>Class:</strong> {{ creator_profile.class_level }}</p>
     <p><strong>Created by:</strong> {{ group.created_by.username }}</p>
 
     {% if user in group.members.all %}
-        <p class="text-success">You are already a member of this group.</p>
-        <a href="{% url 'group_chat' group.id %}" class="btn btn-info">Go to Chat</a>
-       
-        
+        <p class="text-success">✅ You are already a member of this group.</p>
+
+        <!-- Go to Chat Button -->
+        <a href="{% url 'group_chat' group.id %}" class="btn btn-info me-2">Go to Chat</a>
+
+        <!-- Leave Group Form -->
+        <form method="post" action="{% url 'leave_group' group.id %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Leave Group</button>
+        </form>
+
     {% else %}
         <a href="{% url 'join_group' group.id %}" class="btn btn-success">Join Group</a>
     {% endif %}
 </div>
 {% endblock %}
-
-
-  
